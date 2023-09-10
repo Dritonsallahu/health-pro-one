@@ -1,0 +1,14 @@
+{
+  "name": "health-pro-one",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000h\u0000e\u0000a\u0000l\u0000t\u0000h\u0000-\u0000p\u0000r\u0000o\u0000-\u0000o\u0000n\u0000e\u0000\r\u0000 \u0000",
+  "main": "app.js",
+  "scripts": {
+    "dev": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
