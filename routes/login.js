@@ -1,18 +1,9 @@
 const { Router } = require("express");
 const router = Router();
+const controller = require('../controller/login_controller') 
 
-router.get("/login", (req, res) => {
-  res.render("credentials/login");
-});
-
-router.post("/login", (req, res) => {
-  //   console.log(req.body);
-
-  if (req.body.email === "driton@gmail.com" && req.body.password === "123456") {
-    res.redirect("superadmin/dashboard");
-  } else {
-    res.send("Incorrect email or password");
-  }
-});
+router.post('/signup', controller.signup)
+router.get("/login", controller.getLogin);
+router.post("/login", controller.login);
 
 module.exports = router;
