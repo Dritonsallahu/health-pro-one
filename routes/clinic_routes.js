@@ -27,6 +27,27 @@ router.get(
   controller.newPatientView
 );
 
+router.get(
+  "/edit-patient/:patientID",
+  roleMiddleware("Clinic"),
+  authMiddleware,
+  controller.editPatientView
+);
+
+router.post(
+  "/edit-patient",
+  roleMiddleware("Clinic"),
+  authMiddleware,
+  controller.editPatient
+);
+
+router.get(
+  "/delete-patient/:patientId",
+  roleMiddleware("Clinic"),
+  authMiddleware,
+  controller.deletePatient
+);
+
 router.post(
   "/service",
   roleMiddleware("Clinic"),

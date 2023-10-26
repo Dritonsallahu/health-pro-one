@@ -83,7 +83,7 @@ const newPatientView = async (req, res) => {
 };
 
 const addPatient = async (req, res) => {
-  console.log("post");
+  console.log(req.body);
   try {
     const password = req.body.password;
 
@@ -101,6 +101,7 @@ const addPatient = async (req, res) => {
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
+      role: new mongoose.Types.ObjectId("651673bd4588d222d1fa0fa6"),
     });
 
     var id = user._id;
@@ -110,15 +111,87 @@ const addPatient = async (req, res) => {
       userId: id,
       bloodType: req.body.bloodType,
     });
-
     if (patientObject) {
-      res.send(patientObject);
+      res.redirect(`/clinics/patients`);
     } else {
       res.send("Unable to add patient");
     }
   } catch (e) {
-    console.log(e);
-    res.status(500).send(e.message);
+    if (e.code == 11000) {
+      res
+        .status(409)
+        .send({ error: "A patient with this email already exists" });
+    } else {
+      res.status(500).send(e);
+    }
+  }
+};
+
+const editPatientView = async (req, res) => {
+  var id = req.params.patientID;
+  console.log(id);
+  const patient = await Patient.findById(id).populate("userId");
+  if (patient) {
+    res.render("clinics/edit-patient", { patient });
+  } else {
+    res.render("clinics/edit-patient", { error: "Patient not found" });
+  }
+};
+
+const editPatient = async (req, res) => {
+  console.log(req.body);
+  const patient = await Patient.findById(req.body.id);
+  // 1.
+
+  const user = await User.findById({ _id: patient.userId });
+
+  try {
+    if (patient) {
+      user.firstname = req.body.firstname;
+      user.lastname = req.body.lastname;
+      user.username = req.body.username;
+      user.email = req.body.email;
+      if (req.body.password) {
+        const newPass = await bcrypt.hash(req.body.password, 10);
+        user.password = newPass;
+      }
+      patient.birthDate = req.body.birthDate;
+      user.city = req.body.city;
+      user.state = req.body.state;
+      await patient.save();
+      await user.save();
+    }
+    // 2.
+    // const patient = await Patient.findByIdAndUpdate({ id }, { $set: req.body });
+    // const user = await User.findByIdAndUpdate(
+    //   { id: patient.userId },
+    //   { $set: req.body }
+    // );
+    if (patient && user) {
+      res.redirect("/clinics/patients");
+    } else {
+      res.render("/clinics/edit-patient", { message: "Update failed" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.send("sdfsd");
+  }
+};
+
+const deletePatient = async (req, res) => {
+  try {
+    const id = req.params.patientId;
+    const patient = await Patient.findByIdAndDelete(id);
+
+    if (patient) {
+      const user = await User.findByIdAndDelete(patient.userId);
+      res.redirect("/clinics/patients");
+    } else {
+      res.render("/clinics/delete-patient", { message: "Update failed" });
+    }
+  } catch {
+    console.log(error);
+    res.send("sddfdfdfdfdf");
   }
 };
 
@@ -162,7 +235,7 @@ const readPatients = async (req, res) => {
   const patientId = await Role.findOne({ roleName: "Patient" });
 
   try {
-    const patients = await User.find({ role: patientId });
+    const patients = await Patient.find().populate("userId");
 
     if (patients) {
       res.render("clinics/patients", { patients });
@@ -203,4 +276,7 @@ module.exports = {
   readPatients,
   addMedicine,
   newPatientView,
+  editPatientView,
+  editPatient,
+  deletePatient,
 };

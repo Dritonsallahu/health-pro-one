@@ -160,9 +160,11 @@
                         alt=""
                         class="avatar-sm rounded-circle me-2"
                       />
-                      <a href="#" class="text-body"><%= element.username %></a>
+                      <a href="#" class="text-body"
+                        ><%= element.userId.username %></a
+                      >
                     </td>
-                    <td><%= element.email %></td>
+                    <td><%= element.userId.email %></td>
                     <td>31/07/2001</td>
                     <td>06723234454</td>
                     <td>Ferizaj</td>
@@ -177,9 +179,19 @@
                           <i class="bx bx-dots-horizontal-rounded"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                          <li><a class="dropdown-item" href="#">Action</a></li>
                           <li>
-                            <a class="dropdown-item" href="#">Another action</a>
+                            <a
+                              class="dropdown-item text-primary"
+                              href="./edit-patient/<%= element.id %>"
+                              >Update</a
+                            >
+                          </li>
+                          <li>
+                            <a
+                              class="dropdown-item text-danger"
+                              href="./delete-patient/<%= element.id %>"
+                              >Delete</a
+                            >
                           </li>
                           <li>
                             <a class="dropdown-item" href="#"

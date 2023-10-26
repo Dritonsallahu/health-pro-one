@@ -509,13 +509,16 @@
                 <div
                   class="page-title-box d-sm-flex align-items-center justify-content-between"
                 >
-                  <h4 class="mb-sm-0 font-size-18">New patient</h4>
+                  <h4 class="mb-sm-0 font-size-18">Edit patient</h4>
                 </div>
               </div>
             </div>
             <!-- end page title -->
+            <% if (typeof error !== 'undefined') { %>
+            <div class="alert alert-danger"><%= error %></div>
 
-            <form action="./new-patient" method="post">
+            <% } else{ %>
+            <form action="/clinics/edit-patient" method="post">
               <div class="row">
                 <div class="col-xl-12">
                   <div class="card">
@@ -528,11 +531,16 @@
                                 >First name</label
                               >
                               <input
+                                type="hidden"
+                                value="<%= patient.id %>"
+                                name="id"
+                              />
+                              <input
                                 type="text"
                                 class="form-control"
                                 id="validationCustom01"
                                 placeholder="First name"
-                                value=""
+                                value="<%= patient.userId.firstname %>"
                                 name="firstname"
                                 required
                               />
@@ -549,7 +557,7 @@
                                 class="form-control"
                                 id="validationCustom02"
                                 placeholder="Last name"
-                                value=""
+                                value="<%= patient.userId.lastname %>"
                                 name="lastname"
                                 required
                               />
@@ -566,7 +574,7 @@
                                 class="form-control"
                                 id="validationCustom02"
                                 placeholder="Last name"
-                                value=""
+                                value="<%= patient.userId.username %>"
                                 name="username"
                                 required
                               />
@@ -583,7 +591,7 @@
                                 class="form-control"
                                 id="validationCustom03"
                                 placeholder="Last name"
-                                value=""
+                                value="<%= patient.userId.email %>"
                                 name="email"
                                 required
                               />
@@ -614,7 +622,6 @@
                                 placeholder="Last name"
                                 value=""
                                 name="password"
-                                required
                               />
                               <div class="valid-feedback">Looks good!</div>
                             </div>
@@ -631,6 +638,8 @@
                                 class="form-control"
                                 id="validationCustom05"
                                 placeholder="City"
+                                name="city"
+                                value="<%= patient.userId.city %>"
                                 required
                               />
                               <div class="invalid-feedback">
@@ -648,6 +657,8 @@
                                 class="form-control"
                                 id="validationCustom06"
                                 placeholder="State"
+                                name="state"
+                                value="<%= patient.userId.state %>"
                                 required
                               />
                               <div class="invalid-feedback">
@@ -656,30 +667,8 @@
                             </div>
                           </div>
                         </div>
-                        <div class="row">
-                          <div class="col-lg-12">
-                            <div class="mb-3">
-                              <div class="form-check">
-                                <input
-                                  type="checkbox"
-                                  class="form-check-input"
-                                  id="invalidCheck"
-                                  required
-                                />
-                                <label
-                                  class="form-check-label"
-                                  for="invalidCheck"
-                                  >Agree to terms and conditions</label
-                                >
-                                <div class="invalid-feedback">
-                                  You must agree before submitting.
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                         <button class="btn btn-primary" type="submit">
-                          Register
+                          Update
                         </button>
                       </form>
                     </div>
@@ -689,6 +678,7 @@
                 <!-- end col -->
               </div>
             </form>
+            <% } %>
             <!-- end row -->
 
             <!-- end row -->
