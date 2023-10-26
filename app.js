@@ -15,7 +15,7 @@ app.set("views", path.join(__dirname, "/views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cookieParser());
 app.use(bodyParser.json()); // te dhenat qe vin si json
-app.use(bodyParser.urlencoded({ extended: false })); // te dhenat qe vin prej form/fields te webit
+app.use(bodyParser.urlencoded({ extended: true })); // te dhenat qe vin prej form/fields te webit
 
 app.use("/", login); // routat e login-it
 app.use("/superadmin", superadmin); // routat e superadminit

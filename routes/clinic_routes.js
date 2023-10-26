@@ -13,17 +13,18 @@ router.post(
   controller.addDoctor
 );
 
-router.get(
-  "/new-patient",
-  roleMiddleware("Clinic"),
-  authMiddleware,
-  controller.newPatientView
-);
 router.post(
   "/new-patient",
   roleMiddleware("Clinic"),
   authMiddleware,
   controller.addPatient
+);
+
+router.get(
+  "/new-patient",
+  roleMiddleware("Clinic"),
+  authMiddleware,
+  controller.newPatientView
 );
 
 router.post(

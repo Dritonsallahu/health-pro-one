@@ -78,11 +78,12 @@ const addNurse = async (req, res) => {
 };
 
 const newPatientView = async (req, res) => {
+  console.log(req.body);
   res.render("clinics/new-patient");
 };
 
 const addPatient = async (req, res) => {
-  console.log(req.body);
+  console.log("post");
   try {
     const password = req.body.password;
 
@@ -95,6 +96,8 @@ const addPatient = async (req, res) => {
     req.body.password = hash;
 
     const user = await User.create({
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
