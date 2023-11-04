@@ -247,6 +247,15 @@ const readPatients = async (req, res) => {
   }
 };
 
+const showVisits = async (req, res) => {
+  const patients = await Patient.find().populate("userId");
+  res.render('clinics/visits', { patients })
+}
+
+const addVisitView = async (req, res) => {
+  res.render('clinics/new-visit')
+}
+
 const addMedicine = async (req, res) => {
   try {
     const medicine = await Medicine.create({
@@ -279,4 +288,6 @@ module.exports = {
   editPatientView,
   editPatient,
   deletePatient,
+  showVisits,
+  addVisitView,
 };

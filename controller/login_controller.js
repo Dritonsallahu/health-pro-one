@@ -53,15 +53,12 @@ const login = async (req, res) => {
       // Check if the password is correct
       const verify = await bcrypt.compare(password, user.password);
 
-      if (verify === true) {
-        const id = user._id;
-        const token = createToken(id);
-        res.cookie("token", token, {
-          httpOnly: true,
-          maxAge: 3 * 24 * 60 * 60 * 30,
-        });
-
-        const roleId = user.role;
+            if (verify === true) {
+                const id = user._id;
+                const token = createToken(id);
+                var aa = res.cookie("token", token,{httpOnly:true,maxAge:3*24*60*60*30});
+                console.log(aa) 
+                const roleId = user.role;
 
         // Retrieve the role from the database
         const role = await Role.findById(roleId);

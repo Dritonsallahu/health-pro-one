@@ -66,6 +66,18 @@ router.get(
   authMiddleware,
   controller.readPatients
 );
+router.get(
+  '/visits',
+  roleMiddleware('Clinic'),
+  authMiddleware,
+  controller.showVisits
+  );
+router.get(
+  '/new-visit',
+  roleMiddleware('Clinic'),
+  authMiddleware,
+  controller.addVisitView
+  );
 router.post(
   "/add-medicine",
   roleMiddleware("Clinic"),
